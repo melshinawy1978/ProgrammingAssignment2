@@ -1,4 +1,7 @@
-makeCacheMatrix <- function(x = matrix()) {
+#This function creates a special "matrix" object that can cache its inverse.
+#--------------------------------------------
+
+makeCacheMatrix <- function(x = matrix()) {  # this is the function that will be called
   m <- NULL
   set <- function(y) {
     x <<- y
@@ -11,6 +14,11 @@ makeCacheMatrix <- function(x = matrix()) {
        setinv = setinv,
        getinv = getinv)
 }
+#---------------------------------------------
+# This function computes the inverse of the special "matrix" returned by makeCacheMatrix.
+# If the inverse has already been calculated (and the matrix has not changed), 
+#then the cachesolve should retrieve the inverse from the cache.
+
 cacheSolve <- function(x, ...) {
   m <- x$getinv()
   if(!is.null(m)) {
@@ -19,7 +27,7 @@ cacheSolve <- function(x, ...) {
   }
   data <- x$get()
   library(MASS)
-  m <- ginv(data, ...)
+  m <- ginv(data, ...)  # ginv calculates the inverse of square and non square matrices
   x$setinv(m)
   m
   }
